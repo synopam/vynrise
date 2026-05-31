@@ -7,16 +7,12 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            
-            /* 🌐 MENGUNCI RAW URL GAMBAR BACKGROUND DARI GITHUB ANDA */
-            background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.45)), url('https://raw.githubusercontent.com/synopam/VYNRise/refs/heads/main/Picture.png');
-            
+            background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.45)), url('https://githubusercontent.com');
             background-size: cover;
             background-position: center center;
             background-attachment: fixed;
             background-repeat: no-repeat;
             background-color: #0b0914;
-            
             color: #ffffff;
             margin: 0;
             display: flex;
@@ -24,7 +20,6 @@
             min-height: 100vh;
         }
 
-        /* ⬛ BARISAN JUDUL ATAS (BLACK HEADER) */
         .top-header {
             background-color: #000000;
             width: 100%;
@@ -36,17 +31,15 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.6);
         }
 
-        /* AREA KONTEN UTAMA DI TENGAH */
         .main-content {
             flex: 1;
             display: flex;
             flex-direction: column;
-            justify-content: flex-end; /* Memaksa kotak menempel pas di atas lantai kayu lobi */
+            justify-content: flex-end;
             align-items: center;
             padding-bottom: 70px; 
         }
 
-        /* KONTAINER 3 KOTAK UTAMA BERJEJER */
         .menu-container {
             display: flex;
             justify-content: center;
@@ -56,7 +49,6 @@
             max-width: 1000px;
         }
 
-        /* STRUKTUR DASAR KOTAK MENU */
         .card-menu {
             flex: 1;
             background-color: rgba(20, 17, 37, 0.85);
@@ -78,28 +70,24 @@
             font-weight: 800;
         }
 
-        /* 🟠 KOTAK ORANYE (ATURAN) */
         .box-orange {
             border: 3px solid #ff9800;
             box-shadow: 0 0 15px rgba(255, 152, 0, 0.2);
         }
         .box-orange h2 { color: #ff9800; }
 
-        /* 🔵 KOTAK BIRU (GABUNG) */
         .box-blue {
             border: 3px solid #2196f3;
             box-shadow: 0 0 15px rgba(33, 150, 243, 0.3);
         }
         .box-blue h2 { color: #2196f3; }
 
-        /* 🟢 KOTAK HIJAU (KOMUNITAS) */
         .box-green {
             border: 3px solid #4caf50;
             box-shadow: 0 0 15px rgba(76, 175, 80, 0.2);
         }
         .box-green h2 { color: #4caf50; }
 
-        /* WADAH ISI DI DALAM KOTAK */
         .box-inner-content {
             font-size: 13px;
             color: #e2e8f0;
@@ -113,6 +101,10 @@
             flex-direction: column;
             justify-content: center;
         }
+        .box-inner-content ul {
+            margin: 0;
+            padding-left: 16px;
+        }
         
         #isiAturan {
             white-space: pre-wrap;
@@ -123,7 +115,6 @@
             font-family: inherit;
         }
         
-        /* GAYA TOMBOL KLIK DI DALAM KOTAK */
         .action-link {
             display: block;
             text-align: center;
@@ -143,7 +134,6 @@
         .btn-discord-style { background: #5865F2; margin-bottom: 6px; }
         .btn-wa-style { background: #25D366; }
 
-        /* TOAST NOTIFIKASI POP-UP */
         .toast {
             visibility: hidden;
             background-color: #1e1b4b;
@@ -162,23 +152,49 @@
         }
         .toast.show { visibility: visible; }
 
+        /* 📱 KODE BARU: PERBAIKAN KHUSUS UNTUK HP KETIKA LAYAR DI BAWAH 768px */
         @media (max-width: 768px) {
-            .menu-container { flex-direction: column; gap: 15px; }
-            .main-content { padding-bottom: 30px; justify-content: center; }
-            .card-menu { width: 100%; }
+            .top-header {
+                font-size: 22px; /* Mengecilkan teks judul atas */
+                padding: 10px 0;
+            }
+            .main-content {
+                padding: 15px;
+                padding-bottom: 40px; /* Jarak pas saat di-scroll di HP */
+                justify-content: center;
+            }
+            .menu-container {
+                flex-direction: column; /* Mengubah jejeran dari menyamping menjadi atas-bawah */
+                gap: 15px; /* Memberi jarak antar kotak agar tidak menempel */
+                width: 100%;
+            }
+            .card-menu {
+                width: 100%;
+                box-sizing: border-box;
+                padding: 15px 12px; /* Memperkecil padding dalam kotak agar menghemat ruang */
+            }
+            .card-menu h2 {
+                font-size: 18px; /* Ukuran teks ATURAN, GABUNG, KOMUNITAS lebih pas */
+                margin-bottom: 10px;
+            }
+            .box-inner-content {
+                min-height: auto; /* Mengikuti tinggi konten asli agar tidak mubazir ruang */
+                font-size: 12px;  /* Mengecilkan ukuran teks dalam kotak */
+            }
+            .action-link {
+                padding: 10px; /* Ukuran tombol lebih nyaman ditekan jari */
+                font-size: 11px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- ⬛ BLACK HEADER ATAS -->
     <div class="top-header">VYNRise</div>
 
-    <!-- AREA UTAMA -->
     <div class="main-content">
         <div class="menu-container">
             
-            <!-- 🟠 KOTAK ORANYE: ATURAN -->
             <div class="card-menu box-orange">
                 <h2>ATURAN</h2>
                 <div class="box-inner-content">
@@ -187,7 +203,6 @@
                 <a href="#" onclick="showToast('Selamat bermain, patuhi selalu aturan ya!'); return false;" class="action-link btn-orange-style" style="margin-top: 10px;">Saya Mengerti</a>
             </div>
 
-            <!-- 🔵 KOTAK BIRU: GABUNG -->
             <div class="card-menu box-blue">
                 <h2>GABUNG</h2>
                 <div class="box-inner-content">
@@ -195,7 +210,6 @@
                 </div>
             </div>
 
-            <!-- 🟢 KOTAK HIJAU: KOMUNITAS -->
             <div class="card-menu box-green">
                 <h2>KOMUNITAS</h2>
                 <div class="box-inner-content">
@@ -210,9 +224,8 @@
     <div id="toast" class="toast">Menghubungkan...</div>
 
     <script>
-        // Fungsi memuat data teks aturan.txt secara online dari GitHub Anda
         async function loadAturan() {
-            const urlAturan = "https://raw.githubusercontent.com/synopam/VYNRise/refs/heads/main/aturan.txt";
+            const urlAturan = "https://githubusercontent.com";
             try {
                 const response = await fetch(urlAturan);
                 if (response.ok) {
@@ -222,12 +235,10 @@
                     document.getElementById("isiAturan").innerText = "Gagal memuat file teks aturan dari GitHub.";
                 }
             } catch (error) {
-                // Teks manual otomatis jika laptop Anda sedang offline
                 document.getElementById("isiAturan").innerText = "1. Jangan menggunakan Cheat\n2. Jangan Griefing Base\n3. Hormati sesama Player.";
             }
         }
 
-        // Trik khusus agar background lobi tetap muncul di folder laptop Anda (secara lokal)
         function checkLocalFile() {
             if (window.location.protocol === 'file:') {
                 document.body.style.backgroundImage = "linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.45)), url('Picture.png')";
@@ -241,7 +252,6 @@
             setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
         }
 
-        // Menjalankan fungsi otomatis saat halaman dimuat
         loadAturan();
         checkLocalFile();
     </script>
