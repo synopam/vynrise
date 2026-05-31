@@ -8,7 +8,7 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             
-            /* 🌐 LINK GAMBAR RAW YANG SUDAH DISESUAIKAN PERSIS DENGAN NAMA REPO ONLINE ANDA */
+            /* 🌐 TAUTAN RAW YANG BENAR DAN ANTI-BLOKIR */
             background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.45)), url('https://githubusercontent.com');
             
             background-size: cover;
@@ -143,6 +143,7 @@
         .btn-discord-style { background: #5865F2; margin-bottom: 6px; }
         .btn-wa-style { background: #25D366; }
 
+        /* TOAST NOTIFIKASI POP-UP */
         .toast {
             visibility: hidden;
             background-color: #1e1b4b;
@@ -161,7 +162,7 @@
         }
         .toast.show { visibility: visible; }
 
-        /* 📱 PERBAIKAN RESPONSID: OTOMATIS BERJEJER JIKA DIBUKA DI HP */
+        /* 📱 PERBAIKAN RESPONSIVITAS KHUSUS UNTUK HP */
         @media (max-width: 768px) {
             .top-header { font-size: 22px; padding: 10px 0; }
             .main-content { padding: 15px; padding-bottom: 40px; justify-content: center; }
@@ -214,7 +215,7 @@
     <div id="toast" class="toast">Menghubungkan...</div>
 
     <script>
-        // Memuat aturan secara live menggunakan tautan repositori VYNRise Anda yang aktif
+        // Memuat aturan secara live dari GitHub Anda dengan tautan raw yang benar
         async function loadAturan() {
             const urlAturan = "https://githubusercontent.com";
             try {
@@ -230,13 +231,6 @@
             }
         }
 
-        // Trik khusus agar background lobi tetap muncul jika dibuka offline di laptop Anda
-        function checkLocalFile() {
-            if (window.location.protocol === 'file:') {
-                document.body.style.backgroundImage = "linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.45)), url('Picture.png')";
-            }
-        }
-
         function showToast(msg) {
             const toast = document.getElementById("toast");
             toast.innerText = msg;
@@ -245,7 +239,6 @@
         }
 
         loadAturan();
-        checkLocalFile();
     </script>
 </body>
 </html>
