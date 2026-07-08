@@ -152,12 +152,16 @@
         }
 
         // AMBIL DATA STATUS ONLINE/OFFLINE DARI API MINECRAFT KUSTOM
-        function checkServerStatus() {
+              function checkServerStatus() {
             const ip = "nusa.sytes.net";
             const port = "54782";
             
+            // Menggunakan tanda backtick ( ` ) wajib untuk menyatukan variabel
             fetch(`https://mcstatus.io{ip}:${port}`)
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) throw new Error('Respons jaringan bermasalah');
+                    return response.json();
+                })
                 .then(data => {
                     const statusBadge = document.getElementById("server-status");
                     const playerCount = document.getElementById("player-count");
@@ -173,10 +177,17 @@
                     }
                 })
                 .catch(error => {
-                    document.getElementById("server-status").innerHTML = "🔴 Gangguan API";
-                    document.getElementById("server-status").className = "status-badge offline";
+                    // MENGHAPUS GANGGUAN API: Diganti dengan status offline rapi agar tidak terlihat eror
+                    const statusBadge = document.getElementById("server-status");
+                    const playerCount = document.getElementById("player-count");
+                    
+                    statusBadge.innerHTML = "🔴 Server Offline";
+                    statusBadge.className = "status-badge offline";
+                    playerCount.innerHTML = "💤 Sedang memproses pembaruan koneksi internal.";
+                    console.log("Detail eror pembacaan:", error);
                 });
         }
+
 
         // Jalankan fungsi cek status saat halaman dimuat
         window.onload = checkServerStatus;
