@@ -22,7 +22,7 @@
         .btn-kembali { position: absolute; top: 20px; left: 20px; color: #ccc; text-decoration: none; font-weight: bold; font-size: 0.9rem; z-index: 10; }
         .btn-kembali:hover { color: #bc13fe; }
 
-        /* BAGIAN KONTEN BAWAH (Efek Bocor Ungu) */
+        /* BAGIAN KONTEN BAWAH (Efek Bocor Ungu Estetik) */
         .konten { 
             max-width: 600px; 
             margin: 0 auto; 
@@ -43,21 +43,6 @@
         h2 { color: #ff007f; margin-bottom: 15px; font-size: 1.4rem; letter-spacing: 1px; text-shadow: 0 0 10px rgba(255, 0, 127, 0.2); }
         .ip-teks { font-family: monospace; font-size: 1.3rem; font-weight: bold; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px; margin-top: 15px; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.05); }
         
-        /* DESAIN KOTAK STATUS LIVE STATUS */
-        .status-badge {
-            display: inline-block;
-            padding: 8px 16px;
-            font-weight: bold;
-            border-radius: 30px;
-            font-size: 0.9rem;
-            margin-bottom: 15px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-        .online { background: rgba(0, 255, 0, 0.1); border: 1px solid #00ff00; color: #00ff00; text-shadow: 0 0 10px rgba(0,255,0,0.4); }
-        .offline { background: rgba(255, 0, 0, 0.1); border: 1px solid #ff0000; color: #ff0000; text-shadow: 0 0 10px rgba(255,0,0,0.4); }
-        .loading { background: rgba(255, 255, 255, 0.05); border: 1px solid #ccc; color: #ccc; }
-
         /* TOMBOL AKSI MODERN */
         .tombol { display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 14px; font-weight: bold; text-decoration: none; border-radius: 12px; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; cursor: pointer; border: none; font-size: 0.9rem; box-sizing: border-box; }
         .btn-salin { background: linear-gradient(135deg, #a855f7, #ec4899); color: #fff; box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3); }
@@ -93,13 +78,6 @@
     <!-- BAGIAN ALAMAT IP -->
     <div id="alamat" class="konten">
         
-        <!-- KOTAK LIVE STATUS SERVER (BARU) -->
-        <div class="kotak">
-            <h2><i class="fa-solid fa-signal"></i> STATUS SERVER</h2>
-            <div id="server-status" class="status-badge loading">Memeriksa Jaringan...</div>
-            <p id="player-count" style="margin: 0; color: #b0b5c1; font-weight: bold; font-size: 1.1rem;"></p>
-        </div>
-
         <!-- Kotak Java Edition -->
         <div class="kotak">
             <h2>JAVA EDITION (PC)</h2>
@@ -129,7 +107,7 @@
         </div>
     </div>
 
-    <!-- SKRIP SINKRONISASI API STATUS & CLIPBOARD -->
+    <!-- SKRIP LOGIKA SALIN CLIPBOARD -->
     <script>
         var alertDiv = document.getElementById("alert-msg");
 
@@ -150,47 +128,6 @@
                 alertDiv.innerHTML = "";
             }, 4000);
         }
-
-        // AMBIL DATA STATUS ONLINE/OFFLINE DARI API MINECRAFT KUSTOM
-              function checkServerStatus() {
-            const ip = "capelin.aternos.host";
-            const port = "54782";
-            
-            // Menggunakan tanda backtick ( ` ) wajib untuk menyatukan variabel
-            fetch(`https://mcstatus.io{ip}:${port}`)
-                .then(response => {
-                    if (!response.ok) throw new Error('Respons jaringan bermasalah');
-                    return response.json();
-                })
-                .then(data => {
-                    const statusBadge = document.getElementById("server-status");
-                    const playerCount = document.getElementById("player-count");
-                    
-                    if (data.online === true) {
-                        statusBadge.innerHTML = "🟢 Server Online";
-                        statusBadge.className = "status-badge online";
-                        playerCount.innerHTML = `🎮 ${data.players.online} / ${data.players.max} Player Sedang Bermain`;
-                    } else {
-                        statusBadge.innerHTML = "🔴 Server Offline";
-                        statusBadge.className = "status-badge offline";
-                        playerCount.innerHTML = "💤 Server sedang dalam pemeliharaan jaringan";
-                    }
-                })
-                .catch(error => {
-                    // MENGHAPUS GANGGUAN API: Diganti dengan status offline rapi agar tidak terlihat eror
-                    const statusBadge = document.getElementById("server-status");
-                    const playerCount = document.getElementById("player-count");
-                    
-                    statusBadge.innerHTML = "🔴 Server Offline";
-                    statusBadge.className = "status-badge offline";
-                    playerCount.innerHTML = "💤 Sedang memproses pembaruan koneksi internal.";
-                    console.log("Detail eror pembacaan:", error);
-                });
-        }
-
-
-        // Jalankan fungsi cek status saat halaman dimuat
-        window.onload = checkServerStatus;
     </script>
 
 </body>
