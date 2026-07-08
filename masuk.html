@@ -13,7 +13,7 @@
         /* Bagian Atas Menggunakan Gambar Lobby Mentah */
         .atas {
             height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
-            background: linear-gradient(rgba(15,10,25,0.7), #0b0c10), url('https://raw.githubusercontent.com/synopam/vynrise/refs/heads/main/Picture2.png') center/cover;
+            background: linear-gradient(rgba(15,10,25,0.7), #0b0c10), url('https://githubusercontent.com') center/cover;
             padding: 0 20px;
         }
         .atas h1 { font-size: 5rem; color: #bc13fe; text-shadow: 0 0 20px #bc13fe; margin: 0; font-weight: bold; }
@@ -43,12 +43,25 @@
         h2 { color: #ff007f; margin-bottom: 15px; font-size: 1.4rem; letter-spacing: 1px; text-shadow: 0 0 10px rgba(255, 0, 127, 0.2); }
         .ip-teks { font-family: monospace; font-size: 1.3rem; font-weight: bold; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px; margin-top: 15px; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.05); }
         
+        /* DESAIN KOTAK STATUS LIVE STATUS */
+        .status-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            font-weight: bold;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .online { background: rgba(0, 255, 0, 0.1); border: 1px solid #00ff00; color: #00ff00; text-shadow: 0 0 10px rgba(0,255,0,0.4); }
+        .offline { background: rgba(255, 0, 0, 0.1); border: 1px solid #ff0000; color: #ff0000; text-shadow: 0 0 10px rgba(255,0,0,0.4); }
+        .loading { background: rgba(255, 255, 255, 0.05); border: 1px solid #ccc; color: #ccc; }
+
         /* TOMBOL AKSI MODERN */
         .tombol { display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 14px; font-weight: bold; text-decoration: none; border-radius: 12px; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; cursor: pointer; border: none; font-size: 0.9rem; box-sizing: border-box; }
-        
         .btn-salin { background: linear-gradient(135deg, #a855f7, #ec4899); color: #fff; box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3); }
         .btn-salin:hover { transform: translateY(-2px); box-shadow: 0 0 25px rgba(236, 72, 153, 0.6); }
-        
         .btn-discord { background: linear-gradient(135deg, #1d4ed8, #6366f1); color: #fff; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3); }
         .btn-discord:hover { transform: translateY(-2px); box-shadow: 0 0 25px rgba(99, 102, 241, 0.6); }
 
@@ -80,6 +93,13 @@
     <!-- BAGIAN ALAMAT IP -->
     <div id="alamat" class="konten">
         
+        <!-- KOTAK LIVE STATUS SERVER (BARU) -->
+        <div class="kotak">
+            <h2><i class="fa-solid fa-signal"></i> STATUS SERVER</h2>
+            <div id="server-status" class="status-badge loading">Memeriksa Jaringan...</div>
+            <p id="player-count" style="margin: 0; color: #b0b5c1; font-weight: bold; font-size: 1.1rem;"></p>
+        </div>
+
         <!-- Kotak Java Edition -->
         <div class="kotak">
             <h2>JAVA EDITION (PC)</h2>
@@ -88,7 +108,7 @@
             <button onclick="salinJava()" class="tombol btn-salin"><i class="fa-solid fa-copy"></i> SALIN IP JAVA</button>
         </div>
 
-        <!-- Kotak Bedrock Edition (Fungsi Ganda Otomatis) -->
+        <!-- Kotak Bedrock Edition -->
         <div class="kotak">
             <h2>BEDROCK EDITION (HP)</h2>
             <p>Klik tombol di bawah untuk otomatis menyalin alamat jaringan sekaligus membuka game Minecraft Bedrock kamu:</p>
@@ -109,7 +129,7 @@
         </div>
     </div>
 
-    <!-- SKRIP LOGIKA GANDA CLIPBOARD & AUTOMATION -->
+    <!-- SKRIP SINKRONISASI API STATUS & CLIPBOARD -->
     <script>
         var alertDiv = document.getElementById("alert-msg");
 
@@ -120,7 +140,6 @@
         }
 
         function salinBedrock() {
-            // Menyalin alamat IP asli ke clipboard di balik layar
             navigator.clipboard.writeText("play.vynrise.my.id");
             alertDiv.innerHTML = '<i class="fa-solid fa-circle-check"></i> IP Otomatis Disalin! Membuka Minecraft...';
             resetAlert();
@@ -131,6 +150,36 @@
                 alertDiv.innerHTML = "";
             }, 4000);
         }
+
+        // AMBIL DATA STATUS ONLINE/OFFLINE DARI API MINECRAFT KUSTOM
+        function checkServerStatus() {
+            const ip = "play.vynrise.my.id";
+            const port = "23020";
+            
+            fetch(`https://mcstatus.io{ip}:${port}`)
+                .then(response => response.json())
+                .then(data => {
+                    const statusBadge = document.getElementById("server-status");
+                    const playerCount = document.getElementById("player-count");
+                    
+                    if (data.online === true) {
+                        statusBadge.innerHTML = "🟢 Server Online";
+                        statusBadge.className = "status-badge online";
+                        playerCount.innerHTML = `🎮 ${data.players.online} / ${data.players.max} Player Sedang Bermain`;
+                    } else {
+                        statusBadge.innerHTML = "🔴 Server Offline";
+                        statusBadge.className = "status-badge offline";
+                        playerCount.innerHTML = "💤 Server sedang dalam pemeliharaan jaringan";
+                    }
+                })
+                .catch(error => {
+                    document.getElementById("server-status").innerHTML = "🔴 Gangguan API";
+                    document.getElementById("server-status").className = "status-badge offline";
+                });
+        }
+
+        // Jalankan fungsi cek status saat halaman dimuat
+        window.onload = checkServerStatus;
     </script>
 
 </body>
