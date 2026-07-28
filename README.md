@@ -1,1 +1,3 @@
 # VYNRise
+Owner : ELLO DESVIN
+MANAJER : FARAS
