@@ -82,7 +82,7 @@
         <div class="kotak">
             <h2>JAVA EDITION</h2>
             <p>Masukkan alamat lengkap berikut pada kolom server address di game kamu:</p>
-            <div class="ip-teks">play.vynrise.my.id:23020</div>
+            <div class="ip-teks">Server Maintenance</div>
             <button onclick="salinJava()" class="tombol btn-salin"><i class="fa-solid fa-copy"></i> SALIN IP JAVA</button>
         </div>
 
@@ -90,7 +90,7 @@
         <div class="kotak">
             <h2>BEDROCK EDITION</h2>
             <p>Klik tombol di bawah untuk otomatis menyalin alamat jaringan sekaligus membuka game Minecraft Bedrock kamu:</p>
-            <div class="ip-teks">play.vynrise.my.id : <span style="color:#ff007f;">23020</span></div>
+            <div class="ip-teks">Server Maintenance : <span style="color:#ff007f;">23020</span></div>
             <a href="minecraft://?addExternalServer=VYNRise|play.vynrise.my.id:23020" onclick="salinBedrock()" class="tombol btn-salin">
                 <i class="fa-solid fa-gamepad"></i> MASUK MINECRAFT
             </a>
@@ -112,13 +112,13 @@
         var alertDiv = document.getElementById("alert-msg");
 
         function salinJava() {
-            navigator.clipboard.writeText("play.vynrise.my.id:23020");
+            navigator.clipboard.writeText("");
             alertDiv.innerHTML = '<i class="fa-solid fa-circle-check"></i> IP Java Berhasil Disalin!';
             resetAlert();
         }
 
         function salinBedrock() {
-            navigator.clipboard.writeText("play.vynrise.my.id");
+            navigator.clipboard.writeText("");
             alertDiv.innerHTML = '<i class="fa-solid fa-circle-check"></i> IP Otomatis Disalin! Membuka Minecraft...';
             resetAlert();
         }
